@@ -1,4 +1,4 @@
-package algorithms.string;
+package string;
 
 public class RemoveSpaces {
 
@@ -26,23 +26,21 @@ public class RemoveSpaces {
 	 * time:  O(n) traversed once
 	 * space: O(1) excluding char[], or O(n) including char[]
 	 * */
-	public static String removeSpaces(String input) {
+	public String removeSpaces(String input) {
 		if (input == null || input.length() == 0) {
 			return input;
 		}
 
 		char[] array = input.toCharArray();
 		int slow = 0;
+		
+	    for (int f = 0; f < array.length; f++) {
+	        if (array[f] != ' ' || (slow > 0 && array [slow - 1] != ' ')) {
+	            array[slow++] = array[f];
+	        }
+	    }
+		
 		/*
-		int fast = 0;
-		while (fast < array.length) {
-			if (array[fast] == ' ' && (slow == 0 || array[slow - 1] == ' ')) {
-				fast++;
-			} else {
-				array[slow++] = array[fast++];
-			}
-		}
-		*/
 		for (int i = 0; i < array.length; i++) {
 			if (array[i] == ' ' && (slow == 0 || array[slow - 1] == ' ')) {
 				continue;
@@ -50,6 +48,7 @@ public class RemoveSpaces {
 				array[slow++] = array[i];
 			}
 		}
+		*/
 
 		// post-processing
 		if (slow > 0 && array[slow - 1] == ' ') {
@@ -60,6 +59,6 @@ public class RemoveSpaces {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(removeSpaces("  a   bc  d  "));
+		System.out.println(new RemoveSpaces().removeSpaces("  a   bc  d  "));
 	}
 }

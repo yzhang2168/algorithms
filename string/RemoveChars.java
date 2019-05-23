@@ -1,4 +1,4 @@
-package algorithms.string;
+package string;
 
 import java.util.HashSet;
 
