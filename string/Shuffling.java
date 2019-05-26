@@ -1,4 +1,4 @@
-package algorithms.string;
+package string;
 
 /**
  * given a char[]
@@ -10,7 +10,9 @@ public class Shuffling {
 	public static char[] reorder(char[] input) {
 		if (input.length % 2 == 0) {
 			reorder(input, 0, input.length - 1);
-		} else { // for odd number, ignore the last one during reordering
+		} else {
+			// for odd number, ignore the last one during reordering
+			// otherwise, odd numbers make reorder() infinite loop
 			reorder(input, 0, input.length - 2);
 		}
 		return input;
@@ -45,13 +47,15 @@ public class Shuffling {
 		 * */
 		 int mid = left + length / 2;
 		 int lmid = left + length / 4;
-		 int rmid = left + length * 3 / 4;
+		 int rmid = mid + length / 4;
 		 reverse(input, lmid, mid - 1); // I love yahoo -> yahoo love I
 		 reverse(input, mid, rmid - 1);
 		 reverse(input, lmid, rmid - 1); // DE123 -> 123DE
 		 
-		 // half of the left partition's size = lmid - left
+		 // chunk 1's size * 2
+		 // length / 4 * 2 != length / 2 because size / 4 rounds down 
 		 reorder(input, left, left + (lmid - left) * 2 - 1);
+		 // array.length is odd, lmid = left = 0, infinite loop
 		 reorder(input, left + (lmid - left) * 2, right);
 	}
 	

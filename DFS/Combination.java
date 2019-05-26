@@ -1,4 +1,4 @@
-package algorithms.DFS;
+package DFS;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,7 +45,7 @@ public class Combination {
 		if (level == coins.length - 1) {
 			if (moneyLeft % coins[coins.length - 1] == 0) {
 				result[level] = moneyLeft / coins[coins.length - 1]; 
-				util.Util.printArray(result);
+				System.out.println(Arrays.toString(result));
 			}
 			return;
 		}

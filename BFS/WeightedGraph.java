@@ -24,20 +24,31 @@ public class WeightedGraph {
 		}
 		
 		@Override
-		public boolean equals(Object o) {
-			if (this == o) {
+		public boolean equals(Object obj) {
+			if (this == obj)
 				return true;
-			} else if (! (o instanceof GraphNode)) {
+			if (obj == null)
 				return false;
-			} else {
-				GraphNode other = (GraphNode) o;
-				return this.key == other.key && this.neighbors == other.neighbors;
-			}
+			if (getClass() != obj.getClass())
+				return false;
+			GraphNode other = (GraphNode) obj;
+			if (key != other.key)
+				return false;
+			if (neighbors == null) {
+				if (other.neighbors != null)
+					return false;
+			} else if (!neighbors.equals(other.neighbors))
+				return false;
+			return true;
 		}
 		
 		@Override
 		public int hashCode() {
-			return key * 101 + neighbors.hashCode(); // hashing List<Edge> neighbors????
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + key;
+			result = prime * result + ((neighbors == null) ? 0 : neighbors.hashCode());
+			return result;
 		}
 		
 		@Override

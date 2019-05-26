@@ -1,4 +1,4 @@
-package algorithms.string;
+package string;
 
 public class ReverseWordsInSentence {
 	/**  I   love yahoo    -> yahoo love I
@@ -16,15 +16,18 @@ public class ReverseWordsInSentence {
 		}
 		
 		reverseString(array, 0, rightBound);
-
+		
+		// start: 1st letter
+		// end: 1st space
 		int start = 0;
 		for (int i = 0; i <= rightBound; i++) {
 			if (array[i] == ' ') {
 				reverseString(array, start, i - 1);
 				start = i + 1;
+			} else if (i == rightBound) {
+				reverseString(array, start, i);
 			}
 		}
-		reverseString(array, start, rightBound);
 		return new String(array, 0, rightBound + 1);
 	}
 	
@@ -63,8 +66,9 @@ public class ReverseWordsInSentence {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(reverseWords("I love yahoo"));
-		System.out.println(reverseWords("  I    love yahoo  "));
+		String s = "Ime love yahoo";
+		System.out.println(reverseWords(s));
+		System.out.println(reverseWords("  Ime    love yahoo  "));
 		System.out.println(reverseWords("  "));
 	}
 }
