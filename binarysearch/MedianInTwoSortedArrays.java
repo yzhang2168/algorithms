@@ -41,12 +41,11 @@ public class MedianInTwoSortedArrays {
 			return kth(a, aleft, b, bmid + 1, k - k / 2);
 		}
 	}
-	
-	
+
 	public static void main(String[] args) {
-		int[] a = {1};
-		int[] b = {2, 3, 4};
-		int[] c = {0, 1};
+		int[] a = { 1 };
+		int[] b = { 2, 3, 4 };
+		int[] c = { 0, 1 };
 		System.out.println(median(a, b));
 		System.out.println(median(b, c));
 	}

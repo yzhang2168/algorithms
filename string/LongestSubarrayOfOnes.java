@@ -1,4 +1,4 @@
-package algorithms.string;
+package string;
 
 /**
  * Given a 0/1 array, find the longest subarray of 1s after <= k flips 0 -> 1
@@ -12,7 +12,7 @@ package algorithms.string;
  * 		a[f] == 1: f++, update longest
  * 		a[f] == 0
  * 			case 1. zeros < k, zeros++, f++, update longest
- * 			case 2. zeros == k, s++ 
+ * 			case 2. zeros == k, s++, update zeros if 0 is removed 
  * */
 public class LongestSubarrayOfOnes {
 

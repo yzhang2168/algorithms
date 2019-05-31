@@ -1,9 +1,8 @@
-package algorithms.recursion.straightpath;
+package recursion.straightpath;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import data_structures.TreeNode;
+import recursion.TreeNode;
 
 /**
  * 直上直下(非人字形)的题目
@@ -13,19 +12,29 @@ import data_structures.TreeNode;
  * preorder traversal, maintain a path prefix (root to current node)
  * */
 public class MaxSumLeafToRoot {
-
-	public static int maxSumPathLeafToRoot(TreeNode root) {
+	public int maxPathSumRootToLeaf(TreeNode root) {
+		int presum = 0;
+		int[] max = new int[] {Integer.MIN_VALUE};
+		maxPathSumRootToLeaf(root, max, presum);
+		return max[0];
+	}
+	
+	private void maxPathSumRootToLeaf(TreeNode root, int[] max, int presum) {
+		// under node with 1 child only
 		if (root == null) {
-			return 0;
+			return;
 		}
 		
-		// use an array such that the variable is seen across all levels
-		int[] globalMax = {0};
-		// local variable on stack
-		int prefixSum = 0;
+		// leaf node
+		if (root.left == null && root.right == null) {
+			presum += root.value;
+			max[0] = Math.max(max[0], presum);
+			return;
+		}
 		
-		maxSumPath(root, prefixSum, globalMax);		
-		return globalMax[0];
+		presum += root.value;
+		maxPathSumRootToLeaf(root.left, max, presum);
+		maxPathSumRootToLeaf(root.right, max, presum);		
 	}
 	
 	// this saves path info besides max sum
@@ -56,31 +65,10 @@ public class MaxSumLeafToRoot {
 		}		
 		return sum;
 	}
-	
-	// prefixSum is a local var on stack
-	private static void maxSumPath(TreeNode root, int prefixSum, int[] globalMax) {
-		// corner case: the parent of a null node may not be leaf, so this is not base case
-		if (root == null) {
-			return;
-		}
-		
-		// base case leaf node
-		if (root.left == null && root.right == null) {
-			globalMax[0] = Math.max(globalMax[0], root.value + prefixSum);
-			return;
-		}
-		
-		maxSumPath(root.left, prefixSum + root.value, globalMax);
-		maxSumPath(root.right, prefixSum + root.value, globalMax);
-	}
+
 	
 	
 	public static void main(String[] args) {
-		List<Integer> l = new ArrayList<Integer>();
-		for (int i = 0; i <= 10; i++) {
-			l.add(i);
-		}
-		System.out.println(l);
-		System.out.println(sum(l));
+
 	}
 }

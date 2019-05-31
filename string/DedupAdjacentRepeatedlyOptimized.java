@@ -1,4 +1,4 @@
-package algorithms.string;
+package string;
 
 public class DedupAdjacentRepeatedlyOptimized {
 
@@ -25,11 +25,43 @@ public class DedupAdjacentRepeatedlyOptimized {
 			}
 		}
 		return new String(array, 0, slow);
-	}	
+	}
+	
+	/**
+	 * stack: [0, s]
+	 * empty: s = -1
+	 * init: s = 0, f = 1
+	 * for each step:
+	 * 		while a[f] == a[s], stack top, f++
+	 * 		a[f] != a[s]: a[++s] = a[f++]
+	 * */
+	public String deDup(String input) {
+	    if (input == null || input.length() <= 1) {
+	        return input;
+	    }
 
+	    char[] array = input.toCharArray();
+	    int s = 0; // stack: a[0]
+	    int f = 1;
+	    while (f < array.length) {
+	        if (s == -1 || array[f] != array[s]) {
+	            array[++s] = array[f++];
+	        } else {
+	            while (f < array.length && array[f] == array[s]) {
+	                f++;
+	            }
+	            // pop stack top
+	            s--;
+	            
+	            // f == array.length - already copied the 1st occurrence
+	        }
+	    }
+	    return new String(array, 0, s + 1);
+	}
+
+	
 	public static void main(String[] args) {
 		System.out.println(new String());
 		System.out.println(dedupAdjacentRepeatedlyOptimized("zabbbazw"));
 	}
-
 }

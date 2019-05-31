@@ -1,4 +1,4 @@
-package algorithms.recursion;
+package recursion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,60 +73,66 @@ public class RectangleSpiralTraversal {
 	
 	
 	public List<Integer> spiralRecursive(int[][] input) {
-	    List<Integer> result = new ArrayList<Integer>();
-	    
-	    if (input == null || input.length == 0) {
-	      return result;
-	    }
-	    
-	    spiralRecursive(input, result, 0, input[0].length - 1, input.length - 1, 0);
-	    return result;
-	  }
-	  
-	  private void spiralRecursive(int[][] input, List<Integer> result, int top, int right, int bottom, int left) {
-	    if (left >= right || top >= bottom) {
-	      // case 1: nothing left, do nothing
-	    	// 1.1: wide rectangle: even number of rows, top > bottom
-	    	// 1.2: tall rectangle: even number of cols, left > right
-	      
-	    	// case 2: row left
-	    	// wide rectangle: odd number of rows, top == bottom
-	      if (top == bottom) {
-	        for (int i = left; i <= right; i++) {
-	          result.add(input[top][i]);
-	        }  
-	      // case 3: col left  
-	      // tall rectangle: odd number of cols, left == right  
-	      } else if (left == right) {
-	        for (int i = top; i <= bottom; i++) {
-	          result.add(input[i][left]);
-	        }  
-	      }
-	      return;
-	    }
-	    
-	    // top
-	    for (int i = left; i < right; i++) {
-	      result.add(input[top][i]);
-	    }
+		List<Integer> result = new ArrayList<Integer>();
 
-	    // right
-	    for (int i = top; i < bottom; i++) {
-	      result.add(input[i][right]);
-	    }
+		if (input == null || input.length == 0) {
+			return result;
+		}
 
-	    // bottom
-	    for (int i = right; i > left; i--) {
-	      result.add(input[bottom][i]);
-	    }
+		spiralRecursive(input, result, 0, input[0].length - 1, input.length - 1, 0);
+		return result;
+	}
 
-	    // left
-	    for (int i = bottom; i > top; i--) {
-	      result.add(input[i][left]);
-	    }
+	private void spiralRecursive(int[][] input, List<Integer> result, int top, int right, int bottom, int left) {
+		if (left > right || top > bottom) {
+			return;
+		}
+		// case 1: nothing left, do nothing
+		// 1.1: wide rectangle: even number of rows, top > bottom
+		// 1.2: tall rectangle: even number of cols, left > right
 
-	    spiralRecursive(input, result, top + 1, right - 1, bottom - 1, left + 1);
-	  }
+		// case 2: row left
+		// wide rectangle: odd number of rows, top == bottom
+		if (top == bottom) {
+			for (int i = left; i <= right; i++) {
+				result.add(input[top][i]);
+			}  
+			return;
+		} 
+
+		// case 3: col left  
+		// tall rectangle: odd number of cols, left == right  
+		// else if so that for squares, the left element won't be added twice 	      
+		if (left == right) {
+			for (int i = top; i <= bottom; i++) {
+				result.add(input[i][left]);
+			}  
+
+			return;
+		}
+
+		// top
+		for (int i = left; i < right; i++) {
+			result.add(input[top][i]);
+		}
+
+		// right
+		for (int i = top; i < bottom; i++) {
+			result.add(input[i][right]);
+		}
+
+		// bottom
+		for (int i = right; i > left; i--) {
+			result.add(input[bottom][i]);
+		}
+
+		// left
+		for (int i = bottom; i > top; i--) {
+			result.add(input[i][left]);
+		}
+
+		spiralRecursive(input, result, top + 1, right - 1, bottom - 1, left + 1);
+	}
 	  
 	public static void main(String[] args) {
 		int[][] rectangle1 = {{1,2,3,4,5},{6,7,8,9,10}};

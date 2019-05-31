@@ -1,10 +1,10 @@
-package algorithms.string;
+package string;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class AllAnagramsInLongString {
+public class AllAnagrams {
 
 	/**
 	 * find all anagrams of String short in String long, return all start indices
@@ -21,7 +21,7 @@ public class AllAnagramsInLongString {
 		// only when count is 1 -> 0, 'a' is totally matched, match++
 		HashMap<Character, Integer> map = countMap(small);
 		
-		// record how many distanct chars in s have been matched
+		// record how many distinct chars in s have been matched
 		// only when all distinct chars are matched, aka, match = map.size(), we found an anagram
 		int match = 0;
 		
@@ -34,17 +34,19 @@ public class AllAnagramsInLongString {
 			// handle the newly added/rightmost char in the curr window
 			char temp = large.charAt(i);
 			Integer count = map.get(temp);
+			// if count == null, not target char, ignore
 			if (count != null) {
 				map.put(temp,  count - 1);
-				if (count == 1) {
+				if (count == 1) { // new count == 0
 					match++;
 				}
 			}
 			
-			// hand the leftmost char in the prev window
+			// handle the leftmost char in the prev window
 			if (i >= small.length()) {
 				temp = large.charAt(i - small.length());
 				count = map.get(temp);
+				// if count == null, not target char, not in map
 				if (count != null) {
 					// the needed count should ++
 					// only when the count is from 0 -> 1, we are short for 1 match

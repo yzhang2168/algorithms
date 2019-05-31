@@ -1,4 +1,4 @@
-package algorithms;
+package no_home_yet;
 
 public class HammingDistance {
 

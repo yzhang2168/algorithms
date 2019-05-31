@@ -8,12 +8,12 @@ public class BinarySearch {
 		}
 		return binarySearch(array, target, 0, array.length - 1);
 	}
-	
+
 	private static int binarySearch(int[] array, int target, int left, int right) {
 		if (left > right) {
 			return -1;
 		}
-		
+
 		int mid = left + (right - left) / 2;
 		if (array[mid] == target) {
 			return mid;

@@ -1,4 +1,4 @@
-package algorithms.string;
+package string;
 
 /**
  * given a string in compressed form, decompress it to the original string
@@ -22,8 +22,9 @@ public class DecompressString {
 	}
 
 	// the decoded string is shorter, decode from left to right
-	private static int decodeShorter(char[] input) {
+	private static int[] decodeShorter(char[] input) {
 		int end = 0;
+		int extra = 0;
 		for (int i = 0; i < input.length; i += 2) {
 			int digit = getDigit(input[i + 1]);
 			if (digit >= 0 && digit <= 2) {
@@ -32,30 +33,26 @@ public class DecompressString {
 				}
 			} else {
 				// copy a3, a4... and handle it elsewhere
+				extra += digit - 2;
 				input[end++] = input[i];
 				input[end++] = input[i + 1];
 			}
 		}
-		return end;
+		return new int[] {end, extra};
 	}
 	
 	// the decoded string is longer, decode from right to left
 	// length: the length of valid partition starting from index 0
 	// [a, 3, b, b, d, d, e, f, 3,|| 1, f, 3] length = 9
-	private static String decodeLonger(char[] input, int length) {
+	private static String decodeLonger(char[] input, int[] lengthExtra) {
 		// calculate the new required length
-		int newLength = length;
-		for (int i = 0; i < length; i++) {
-			int digit = getDigit(input[i]);
-			if (digit > 2 && digit <= 9) {
-				newLength += digit - 2;
-			}
-		}
+		int length = lengthExtra[0];
+		int extra = lengthExtra[1];
 		
 		// note: if it is required to do this in-place, 
 		// usually the input array is sufficiently long
-		char[] result = new char[newLength];
-		int end = newLength - 1;
+		char[] result = new char[length + extra];
+		int end = result.length - 1;
 		for (int i = length - 1; i >= 0; i--) {
 			int digit = getDigit(input[i]);
 			if (digit > 2 && digit <= 9) {

@@ -18,6 +18,7 @@ public class ReplaceSubstring {
 	 * 		slow += replacement.length(), 
 	 * 		fast += substr.length()
 	 * 	if no match, array[slow++] = array[fast++]
+	 * 
 	 * case 2. result gets longer
 	 * 	1. find # matches of substring
 	 * 	2. calculate result char[] length
@@ -116,6 +117,5 @@ public class ReplaceSubstring {
 		System.out.println(t.replace("aaa", "aa", ""));
 		System.out.println(t.replace("aaa", "aa", "bbb")); // bbba
 		System.out.println();
-
 	}
 }

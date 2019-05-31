@@ -1,4 +1,4 @@
-package algorithms.string;
+package string;
 
 /*
  * input:  A1B2C3D4

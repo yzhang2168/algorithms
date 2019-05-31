@@ -1,4 +1,4 @@
-package algorithms.BFS;
+package BFS;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

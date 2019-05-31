@@ -1,4 +1,4 @@
-package algorithms;
+package numbers;
 /**
  * every even integer > 2 can be expressed as the sum of 2 primes
  * */

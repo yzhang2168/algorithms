@@ -1,4 +1,4 @@
-package algorithms.string;
+package string;
 
 import java.util.HashSet;
 
@@ -12,7 +12,6 @@ public class LongestSubstringUniqueChars {
 	 * 		a[f] in set, remove a[s] from set, s++
 	 * */
 	public static int longestSubstring(String input) {
-
 		HashSet<Character> distinct = new HashSet<Character>();
 		int slow = 0;
 		int fast = 0;

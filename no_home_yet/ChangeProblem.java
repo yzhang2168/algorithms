@@ -1,8 +1,8 @@
-package algorithms;
+package no_home_yet;
+
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class ChangeProblem {
 
 	/**

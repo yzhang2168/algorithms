@@ -1,4 +1,4 @@
-package algorithms.recursion.math;
+package recursion.math;
 
 public class Power {
 	/**

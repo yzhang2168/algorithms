@@ -1,40 +1,29 @@
-package algorithms.recursion.straightpath;
+package recursion.straightpath;
 
-import data_structures.TreeNode;
+import recursion.TreeNode;
 /**
  * from any node to any node (can be the same node) on the same straight path
  * */
 public class MaxSumStraightPath {
-
-	public static int maxSumStraightPathI(TreeNode root) {
-		if (root == null) {
-			return 0;
-		}
-		
-		// lastSum records largest sum from curr node to root, including curr node
-		int lastSum = Integer.MIN_VALUE;
-		int[] globalMax = {Integer.MIN_VALUE};
-		maxSumStraightPathI(root, lastSum, globalMax);
-		return globalMax[0];
+	
+	public int maxPathSumStraightPath(TreeNode root) {
+		// root to curr
+		int currSum = 0;
+		int[] max = new int[] {Integer.MIN_VALUE};
+		maxPathSumStraightPath(root, max, currSum);
+		return max[0];
 	}
 	
-	public static void maxSumStraightPathI(TreeNode root, int lastSum, int[] globalMax) {
+	private void maxPathSumStraightPath(TreeNode root, int[] max, int currSum) {
 		if (root == null) {
 			return;
 		}
-
-		if (lastSum <= 0) {
-			lastSum = root.value;
-		} else {
-			lastSum += root.value;
-		}
 		
-		globalMax[0] = Math.max(globalMax[0], lastSum);
-		
-		maxSumStraightPathI(root.left, lastSum, globalMax);
-		maxSumStraightPathI(root.right, lastSum, globalMax);	
+		currSum = currSum < 0 ? root.value : currSum + root.value;
+		max[0] = Math.max(max[0], currSum);
+		maxPathSumStraightPath(root.left, max, currSum);
+		maxPathSumStraightPath(root.right, max, currSum);		
 	}
-	
 	
 	public static int maxSumStraightPathII(TreeNode root) {
 		if (root == null) {

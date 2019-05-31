@@ -1,10 +1,10 @@
-package algorithms.recursion.returnvaluebottomup;
+package recursion.returnvaluebottomup;
 
-import data_structures.TreeNode;
+import tree.TreeNode;
 
 public class TreeHeight {
 
-	public static int getHeight(TreeNode root) {
+	public static <E  extends Comparable<E>> int getHeight(TreeNode<E> root) {
 		if (root == null) {
 			return 0;
 		}

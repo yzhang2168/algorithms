@@ -7,6 +7,7 @@ import java.util.PriorityQueue;
 /**
  * given a matrix of n x m, each row and each column are sorted in ascending order
  * find the kth smallest number
+ * pick keywords in problems and use a simple use case to understand the problem
  * */
 public class kthSmallest {
 	
@@ -23,7 +24,7 @@ public class kthSmallest {
 		
 		@Override
 		public int compareTo(Cell another) {
-			return Integer.valueOf(this.key).compareTo(another.key);
+			return Integer.compare(this.key, another.key);
 		}
 		
 		@Override

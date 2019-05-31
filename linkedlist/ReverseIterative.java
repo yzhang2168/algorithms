@@ -16,11 +16,15 @@ public class ReverseIterative<E> {
 		}
 		ListNode prev = null;
 		ListNode curr = next2;
-		ListNode next = null;
+		/* 
+		 * do not define next here, because it does not have meaning outside while(). 
+		 * What if others use next? 
+		 * We do not need to consider the overhead of init next repeatly within while() 
+		 * */
+		//ListNode next = null;
 		while (curr != null) {
-			next = curr.next;
-			curr.next = prev;
-			
+			ListNode next = curr.next;
+			curr.next = prev;			
 			prev = curr;
 			curr = next;
 		}

@@ -1,4 +1,4 @@
-package algorithms.binarysearch;
+package binarysearch;
 
 /* XXXXXXXXYYYYYYYYY
  * l	    m	   r
@@ -23,26 +23,26 @@ public class FirstBadVersion {
 		if (n <= 0) {
 			return -1;
 		}
-		
+
 		int l = 1;
 		int r = n;
 		while (l < r) {// l <= r - infinite loop, l < r - 1
-			 int m = l + (r - l) / 2;
-			 if (isBadVersion(m) == true) {
-				 r = m; 
-			 } else {
-				 l = m + 1;
-			 }
+			int m = l + (r - l) / 2;
+			if (isBadVersion(m) == true) {
+				r = m;
+			} else {
+				l = m + 1;
+			}
 		}
-		
-		// 1 element (l == r) left that needs to be evaluated 
+
+		// 1 element (l == r) left that needs to be evaluated
 		if (isBadVersion(l)) {
 			return l;
 		} else { // not found because excluded elements are not the solution
-			return -1;			
+			return -1;
 		}
 	}
-	
+
 	private static boolean isBadVersion(int index) {
 		return index == 0; // WRONG, just a placeholder
 	}

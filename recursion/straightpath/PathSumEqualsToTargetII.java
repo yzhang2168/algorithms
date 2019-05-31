@@ -1,10 +1,10 @@
-package algorithms.recursion.straightpath;
+package recursion.straightpath;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import data_structures.TreeNode;
+import recursion.TreeNode;
 
 /**
  * any node to any node
@@ -47,7 +47,20 @@ import data_structures.TreeNode;
  * prefixSum[i]: sum(root ... i)
  * target 17
  * 
- * if there exists a path from any node to any node on the same straight path
+ * preorder + carry a prefix
+ * 
+ * 1. max sum path from a leaf to root
+ * base case: leaf node
+ * recursion rule: prefixSum += root.value
+ * 
+ * 3. max sum path from any node to any node on the same straight path
+ * base case: null
+ * recursion rule: DP from curr to root 
+ * 	lastSum is largest sum from curr to any node on the straight path 
+ * 	if (lastSum <= 0), lastSum = root.value
+ * 	else, lastSum += root.value
+ * 
+ * 2. if there exists a path from any node to any node on the same straight path
  * that has a sum == target, then current prefixSum - target is one of the saved prefixSums
  * for each node, instead of using a for (), maintain a path prefixSum [root...curr]
  * data structure:
@@ -65,7 +78,7 @@ import data_structures.TreeNode;
  * time : O(n)
  * space: O(height)							
  * */
-public class SumPathEqualsToTarget {
+public class PathSumEqualsToTargetII {
 
 	public static boolean sumEqualsToTarget(TreeNode root, int target) {
 		if (root == null) {
@@ -74,7 +87,7 @@ public class SumPathEqualsToTarget {
 
 		int currSum = 0;
 		HashSet<Integer> prefixSum = new HashSet<Integer>();
-		prefixSum.add(0);
+		prefixSum.add(0); // to check if currSum == target -> currSum - target == 0
 		return sumEqualsToTarget(root, target, prefixSum, currSum);
 	}
 
@@ -86,6 +99,7 @@ public class SumPathEqualsToTarget {
 		currSum += root.value;
 		boolean needRemoval = prefixSum.add(currSum);
 
+		// if (currSum == target || prefixSum.contains(currSum - target)) // if no 0 in prefixSum set 
 		if (prefixSum.contains(currSum - target)) {
 			return true;
 		} else if (sumEqualsToTarget(root.left, target, prefixSum, currSum) ||
@@ -149,10 +163,11 @@ public class SumPathEqualsToTarget {
 		n3.left = n7;
 		n3.right = n8;
 		
+		System.out.println(sumEqualsToTarget(n0, 5)); // true
 		System.out.println(sumEqualsToTarget(n0, 7)); // true
 		System.out.println(sumEqualsToTarget(n0, 12)); // true
 		System.out.println(sumEqualsToTarget(n0, 10)); // true
-		System.out.println(sumEqualsToTarget(n0, 27));
+		System.out.println(sumEqualsToTarget(n0, 27)); // false
 
 	}
 
