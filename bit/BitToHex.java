@@ -1,6 +1,28 @@
-package algorithms.bit;
+package bit;
 
 public class BitToHex {
+	/**
+	 * avoid calculations on leading zeros
+	 * */
+	public static String toHeax(int n) {
+		if (n == 0) {
+			return "0x0";
+		}
+		
+		char[] base16 = {'0', '1', '2', '3', '4', '5', '6', '7', 
+				 '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};		
+		boolean leadingZeros = true;
+		StringBuilder sb = new StringBuilder("0x");
+		
+		for (int i = 28; i >= 0; i -= 4) {
+			char curr = base16[(n >> i) & 0b1111]; // 0xF
+			if (!leadingZeros || curr != '0') {
+				sb.append(curr);
+				leadingZeros = false;
+			}
+		}
+		return sb.toString();
+	}
 	
 	/**
 	 * assumption: non-negative

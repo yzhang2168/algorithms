@@ -1,4 +1,4 @@
-package algorithms.bit;
+package bit;
 
 public class BitBuildingBlocks {
 	// test if x's kth bit is 1 

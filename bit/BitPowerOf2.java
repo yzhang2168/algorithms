@@ -1,4 +1,4 @@
-package algorithms.bit;
+package bit;
 
 public class BitPowerOf2 {
 	/**
@@ -11,6 +11,29 @@ public class BitPowerOf2 {
 			return false;
 		}
 		return countOnes(n) == 1;
+	}
+	
+	public static int countOnes(int n) {
+		int result = 0;
+		while (n != 0) {
+			result += n & 1;
+			n = n >>> 1;
+		}
+		return result;
+	}
+	
+	public static boolean isPowerOfTwo2(int n) {
+		if (n <= 0) {
+			return false;
+		}
+		
+		// ignore all trailing 0s
+		while ((n & 1) == 0) {
+			n = (n >>> 1);
+		}
+
+		// check if the number is 1 at the end
+		return n == 1;
 	}
 	
 	/**
@@ -30,14 +53,6 @@ public class BitPowerOf2 {
 		return (n > 0) && ((n & (n - 1)) == 0);
 	}
 	
-	public static int countOnes(int n) {
-		int result = 0;
-		while (n != 0) {
-			result += n & 1;
-			n = n >>> 1;
-		}
-		return result;
-	}
 	
 	public static void main(String[] args) {
 		int x = 0b1010;

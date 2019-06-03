@@ -1,4 +1,4 @@
-package algorithms.bit;
+package bit;
 
 public class BitDiffBits {
 	
@@ -6,22 +6,16 @@ public class BitDiffBits {
 	public static int countDifferentBits(int a, int b) {
 		int c = a ^ b;
 		return countOnes(c);
-		/**
-		int result = 0;
-		for (int c = a ^ b; c != 0; c = c >>> 1) {
-			result += c & 1; 
-		}
-		return result;
-		*/
 	}
 	
 	public static int countOnes(int n) {
-		int result = 0;
+		int count = 0;
+		// termination: n == 0
 		while (n != 0) {
-			result += n & 1;
-			n = n >>> 1;
+			count += n & 1;
+			n = n >>> 1; // pad with 0s
 		}
-		return result;
+		return count;
 	}
 	
 	public static void main(String[] args) {

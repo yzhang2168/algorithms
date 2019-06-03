@@ -1,4 +1,4 @@
-package algorithms.bit;
+package bit;
 
 public class BitReverseBits {
 
@@ -34,10 +34,19 @@ public class BitReverseBits {
 		int leftBit = (x >> j) & 1;
 		int rightBit = (x >> i) & 1;
 		if (leftBit != rightBit) {
-			x = x ^ (1 << j);
-			x = x ^ (1 << i);
+			x = x ^ (1 << i | 1 << j);
+			//x = x ^ (1 << j);
+			//x = x ^ (1 << i);
 		}
 		return x;
+	}
+	
+	public static int reverseBitsII(int x) {
+		int temp = 0;
+		for (int i = 0; i < 32; i++) {
+			temp = (temp << 1) + ((x >> i) & 1); 
+		}
+		return temp;
 	}
 	
 	public static void main(String[] args) {
@@ -54,8 +63,11 @@ public class BitReverseBits {
 		System.out.println(Integer.toBinaryString(x + z));
 
 		System.out.println(Integer.toBinaryString(reverseBits(x)));
+		System.out.println(Integer.toBinaryString(reverseBitsII(x)));
 		System.out.println(Integer.toBinaryString(reverseBits(y)));
+		System.out.println(Integer.toBinaryString(reverseBitsII(y)));
 		System.out.println(Integer.toBinaryString(reverseBits(z)));
+		System.out.println(Integer.toBinaryString(reverseBitsII(z)));
 	}	
 
 }
