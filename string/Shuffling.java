@@ -21,7 +21,7 @@ public class Shuffling {
 	public static void reorder(char[] input, int left, int right) {
 		int length = right - left + 1;
 		// base case: 0 or 2 elements, just return
-		if (length <= 2) {
+		if (length <= 2) { // left >= right - 1
 			return;
 		}	
 		/**

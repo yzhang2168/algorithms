@@ -63,10 +63,8 @@ public class RunLengthEncoding {
 		while (f >= 0) {
 			if (isLetter(array[f]) && (f == array.length - 1 || isLetter(array[f + 1]))) {
 				result[s--] = '1';
-				result[s--] = array[f--];
-			} else {
-				result[s--] = array[f--];
 			}
+			result[s--] = array[f--];			
 		}
 		return new String(result);	
 	}

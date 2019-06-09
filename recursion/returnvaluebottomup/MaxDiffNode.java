@@ -1,10 +1,10 @@
-package algorithms.recursion.returnvaluebottomup;
+package recursion.returnvaluebottomup;
 
-import data_structures.TreeNode;
+import recursion.TreeNode;
 
 public class MaxDiffNode {
 
-	public static TreeNode maxDiffNode(TreeNode root) {
+	public TreeNode maxDiffNode(TreeNode root) {
 		if (root == null) {
 			return root;
 		}
@@ -19,13 +19,13 @@ public class MaxDiffNode {
 	}
 	
 	
-	private static int maxDiffNode(TreeNode root, int[] max, TreeNode[] node) {
+	private int maxDiffNode(TreeNode root, int[] max, TreeNode[] node) {
 		// base case
 		if (root == null) {
 			return 0;
 		}
 		
-		// step 1: want from left and right subtrees
+		// step 1: get # nodes from left and right subtrees
 		int leftNodes = maxDiffNode(root.left, max, node);
 		int rightNodes = maxDiffNode(root.right, max, node);
 		
@@ -36,7 +36,7 @@ public class MaxDiffNode {
 			node[0] = root;
 		}
 		
-		// step 3: what to return to parent: # nodes 
+		// step 3: what to return to parent: # nodes == step 1 
 		return 1 + leftNodes + rightNodes;
 	}
 	
@@ -83,8 +83,10 @@ public class MaxDiffNode {
 		n22.right = n25;
 		n24.left = n26;
 		n25.left = n27;
-		System.out.println(maxDiffNode(n11).value);
-		System.out.println(maxDiffNode(n21).value);
+		
+		MaxDiffNode test = new MaxDiffNode();
+		System.out.println(test.maxDiffNode(n11).value);
+		System.out.println(test.maxDiffNode(n21).value);
 
 	}
 }

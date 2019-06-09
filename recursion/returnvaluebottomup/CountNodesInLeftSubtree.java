@@ -1,4 +1,4 @@
-package algorithms.recursion.returnvaluebottomup;
+package recursion.returnvaluebottomup;
 
 
 public class CountNodesInLeftSubtree {
@@ -32,4 +32,5 @@ public class CountNodesInLeftSubtree {
 			return 1 + leftNodes + rightNodes;
 		}
 	}
+
 }

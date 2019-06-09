@@ -1,6 +1,6 @@
 package string;
 
-public class DedupAdjacentRepeatedlyOptimized {
+public class DedupAdjacentRepeatedlyOptimal {
 
 	/**
 	 * "zabbbazw" -> "w"
@@ -8,7 +8,7 @@ public class DedupAdjacentRepeatedlyOptimized {
 	 * space O(1)
 	 * 
 	 * */
-	public static String dedupAdjacentRepeatedlyOptimized(String input) {
+	public static String dedupAdjacentRepeatedlyOptimal(String input) {
 		if (input == null || input.length() == 0) {
 			return input;
 		}
@@ -41,27 +41,26 @@ public class DedupAdjacentRepeatedlyOptimized {
 	    }
 
 	    char[] array = input.toCharArray();
-	    int s = 0; // stack: a[0]
+	    int end = 0; // stack: a[0]
 	    int f = 1;
 	    while (f < array.length) {
-	        if (s == -1 || array[f] != array[s]) {
-	            array[++s] = array[f++];
+	        if (end == -1 || array[f] != array[end]) {
+	            array[++end] = array[f++];
 	        } else {
-	            while (f < array.length && array[f] == array[s]) {
+	            while (f < array.length && array[f] == array[end]) {
 	                f++;
 	            }
 	            // pop stack top
-	            s--;
-	            
+	            end--;	            
 	            // f == array.length - already copied the 1st occurrence
 	        }
 	    }
-	    return new String(array, 0, s + 1);
+	    return new String(array, 0, end + 1);
 	}
 
 	
 	public static void main(String[] args) {
 		System.out.println(new String());
-		System.out.println(dedupAdjacentRepeatedlyOptimized("zabbbazw"));
+		System.out.println(dedupAdjacentRepeatedlyOptimal("zabbbazw"));
 	}
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Find all numbers that appear in both of two sorted arrays (the two arrays are all sorted in ascending order).
@@ -67,16 +68,8 @@ public class CommonNumbers {
 		}
 		*/
 		// <value, count>
-		HashMap<Integer, Integer> aCounts = new HashMap<Integer, Integer>();
-		for (Integer i : A) {
-			aCounts.put(i, aCounts.getOrDefault(i, 0) + 1);
-		}
-		
-		HashMap<Integer, Integer> bCounts = new HashMap<Integer, Integer>();
-		for (Integer i : B) {
-			bCounts.put(i, bCounts.getOrDefault(i, 0) + 1);
-		}
-		
+		Map<Integer, Integer> aCounts = buildMap(A);		
+		Map<Integer, Integer> bCounts = buildMap(B);
 		for (HashMap.Entry<Integer, Integer> entry : aCounts.entrySet()) {
 			Integer key = entry.getKey();			
 			Integer count = bCounts.get(key); // try to call APIs as less as possible
@@ -90,6 +83,13 @@ public class CommonNumbers {
 		return result;
 	}
 	
+	private Map<Integer, Integer> buildMap(List<Integer> list) {
+		Map<Integer, Integer> result = new HashMap<Integer, Integer>();
+		for (Integer i : list) {
+			result.put(i,  result.getOrDefault(i, 0) + 1);
+		}
+		return result;
+	}
 	/**
 	 * if n <<<<< m
 	 * binary search

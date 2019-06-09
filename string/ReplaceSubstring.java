@@ -56,7 +56,7 @@ public class ReplaceSubstring {
 	private String replaceLonger(char[] array, String pattern, String replacement) {
 		List<Integer> matches = findAllMatches(array, pattern);
 
-		// result: [s - 1, end]
+		// result: [s + 1, end]
 		char[] result = new char[array.length + matches.size() * (replacement.length() - pattern.length())];
 		int lastIndex = matches.size() -1;
 		int s = result.length - 1;
@@ -78,9 +78,13 @@ public class ReplaceSubstring {
 	}
 
 	private boolean isMatch(char[] array, String pattern, int startIndex) {
+		if (startIndex > array.length - pattern.length()) {
+			return false;
+		}
+		
 		for (int i = 0; i < pattern.length(); i++) {
 			// out of bound
-			if (startIndex + i >= array.length || array[startIndex + i] != pattern.charAt(i)) {
+			if (array[startIndex + i] != pattern.charAt(i)) {
 				return false;
 			}
 		}

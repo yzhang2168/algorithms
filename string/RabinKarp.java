@@ -43,6 +43,8 @@ public class RabinKarp {
 		}
 		
 		// text: use a sliding window to scan through it
+		// left: i
+		// right: i + pattern.length() - 1
 		for (int i = 1; i <= text.length() - pattern.length(); i++) {			
 			// 1. remove out of window char at i - 1
 			// seed = (prime ^ (pattern.length - 1)) % largePrime, the base factor for the 1st position in window
@@ -72,6 +74,7 @@ public class RabinKarp {
 	
 	// take mod for each calculation to scale down the number
 	private static int moduleHash(int hash, int addition, int prime, int largePrime) {
+		// == (hash * prime + addition) % largePrime
 		return (hash * prime % largePrime + addition) % largePrime;
 	}
 	

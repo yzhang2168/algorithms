@@ -11,7 +11,7 @@ public class StringToInt {
 	 * overflow
 	 * */
 	public int atoi(String s) {
-		if (s == null || s.length() == 0) {
+		if (s == null) {
 			return 0;
 		}
 		
@@ -66,5 +66,11 @@ public class StringToInt {
 		}
 		
 		return result;
+	}
+	
+	public static void main(String[] args) {
+		StringToInt test = new StringToInt();
+		String s = "";
+		System.out.println(test.atoi(s));
 	}
 }
