@@ -1,8 +1,9 @@
-package algorithms.DP;
+package DP;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Arrays;
 
 public class EditDistance {
 
@@ -25,7 +26,7 @@ public class EditDistance {
 	 * # branches at each level: 1-3
 	 * */
 	public static int editDistanceRecursion(String one, String two) {
-		// base case
+		// base case		
 		if (one.length() == 0) {
 			return two.length();
 		}
@@ -86,11 +87,46 @@ public class EditDistance {
 		}
 		return distance[m][n];
 	}
+	
+	public static int editDistanceDPOptimal(String one, String two) {
+		int m = one.length();
+		int n = two.length();
+
+		// add an extra i = 0 row and j= 0 col
+		int[] prevRow = new int[n + 1];
+		int[] currRow = new int[n + 1];
+		
+		for (int i = 0; i <= m; i++) {
+			for (int j = 0; j <= n; j++) {
+				if (i == 0) {
+					prevRow[j] = j;
+				} else if (j == 0) {
+					currRow[j] = i;
+				} else if (one.charAt(i - 1) == two.charAt(j - 1)) {
+					currRow[j] = prevRow[j - 1];
+				} else {
+					int replace = 1 + prevRow[j - 1];
+					int insert = 1 + currRow[j - 1];
+					int delete = 1 + prevRow[j];
+					currRow[j] = Math.min(replace, Math.min(insert, delete));
+				}
+			}
+			
+			// if m == 0, currRow is not used
+			if (i > 0) {
+	              prevRow = Arrays.copyOf(currRow, n + 1);
+	              // prevRow = currRow is copying reference!!!
+	        }
+		}
+		return prevRow[n];		
+	}
 
 	
 	public static void main(String[] args) {
+		System.out.println(editDistanceDPOptimal("", ""));
+		System.out.println(editDistanceDPOptimal("abc", "abc"));
 		System.out.println(editDistanceRecursion("", ""));
-		
+
 		Instant start1 = Instant.now();
 		System.out.println(editDistanceRecursion("Shakespeare", "shake spear"));
 		Instant end1 = Instant.now();

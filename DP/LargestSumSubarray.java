@@ -1,4 +1,4 @@
-package algorithms.DP;
+package DP;
 
 public class LargestSumSubarray {
 
@@ -39,13 +39,8 @@ public class LargestSumSubarray {
 		// m[i] = m[i - 1] + input[i] if m[i - 1] >= 0
 		// m[i] = input[i] otherwise 
 		for (int i = 1; i < n; i++) {
-			if (m[i - 1] >= 0) {
-				m[i] = m[i - 1] + input[i];
-				globalMax = Math.max(globalMax, m[i]);
-			} else {
-				m[i] = input[i];
-				globalMax = Math.max(globalMax, m[i]);
-			}
+			m[i] = Math.max(m[i - 1] + input[i], input[i]);
+			globalMax = Math.max(globalMax, m[i]);			
 		}
 
 		return globalMax;
@@ -66,13 +61,8 @@ public class LargestSumSubarray {
 		// m[i] = m[i - 1] + input[i] if m[i - 1] >= 0
 		// m[i] = input[i] otherwise 
 		for (int i = 1; i < input.length; i++) {
-			if (lastMax >= 0) {
-				lastMax = lastMax + input[i];
-				globalMax = Math.max(globalMax, lastMax);
-			} else {
-				lastMax = input[i];
-				globalMax = Math.max(globalMax, lastMax);
-			}
+			lastMax = Math.max(lastMax + input[i], input[i]);
+			globalMax = Math.max(globalMax, lastMax);
 		}
 
 		return globalMax;
@@ -97,26 +87,26 @@ public class LargestSumSubarray {
 		}
 
 		// base case
-		int lastMax = input[0];
-		int globalMax = input[0];
+		int currSum = input[0];
+		int globalMax = currSum;		
+		int currLeft = 0; // m[i] left border
+		int globalLeft = 0; // globalMax left border
+		int globalRight = 0;// globalMax right border
 		
-		int currLeft = 0;
-		int globalLeft = 0;
-		int globalRight = 0;
 		// induction rule
 		// m[i]: largestSumSubarray in 0...i including input[i]
 		// m[i] = m[i - 1] + input[i] if m[i - 1] >= 0
 		// m[i] = input[i] otherwise 
 		for (int i = 1; i < input.length; i++) {
-			if (lastMax >= 0) {
-				lastMax = lastMax + input[i];
+			if (currSum > 0) {
+				currSum += input[i];
 			} else {
-				lastMax = input[i];
+				currSum = input[i];
 				currLeft = i;
 			}
 			
-			if (lastMax > globalMax) {
-				globalMax = lastMax;
+			if (currSum > globalMax) {
+				globalMax = currSum;
 				globalLeft = currLeft;
 				globalRight = i;
 			}	

@@ -1,4 +1,4 @@
-package algorithms.DP;
+package DP;
 
 public class DPFib {
 

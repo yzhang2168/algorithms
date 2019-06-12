@@ -1,7 +1,8 @@
-package algorithms.DP;
+package DP;
+
+import java.util.Arrays;
 
 public class LargestSquareOfOnes {
-
 	/**
 	 * input matrix is a 0/1 binary square matrix
 	 * # squares in a matrix of n by n: 
@@ -28,13 +29,8 @@ public class LargestSquareOfOnes {
 		}
 
 		int n =  input.length;
-		if (n == 0) {
-			return 0;
-		}
-
 		int max = 0;
 		int[][] result = new int[n][n];
-
 		// m[i][j]: largest square of 1s with i, j as the right bottom position
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
@@ -43,74 +39,54 @@ public class LargestSquareOfOnes {
 				} else if (input[i][j] == 0) {
 					result[i][j] = 0;
 				} else { // input[i][j] == 1
-					int min = Math.min(result[i - 1][j - 1], result[i][j - 1]);
-					min = Math.min(min, result[i - 1][j]);
-					result[i][j] = 1 + min;	
+					result[i][j] = 1 + Math.min(result[i - 1][j - 1], Math.min(result[i - 1][j], result[i][j - 1]));
 				}
 				
-				if (result[i][j] > max) {
-					max = result[i][j];
-				}
+				max = Math.max(max, result[i][j]);
 			}
 		}
 
 		return max;
 	}
+	
+	public int largestSquareOfOnesOptimal(int[][] matrix) {
+	      if (matrix == null) {
+	          return 0;
+	      }
+	      
+	      int max = 0;
+	      int n = matrix.length;
+	      int[] prevRow = new int[n];
+	      int[] currRow = new int[n];
+	      // result[i][j]: largest square of 1s ending at matrix[i][j]
+	      for (int i = 0; i < n; i++) {
+	          for (int j = 0; j < n; j++) {
+	              if (i == 0) {
+	                  prevRow[j] = matrix[i][j];
+	                  max = Math.max(max, prevRow[j]);
+	              } else if (j == 0) {
+	                  currRow[j] = matrix[i][j];
+	              } else if (matrix[i][j] == 0) {
+	                currRow[j] = 0;
+	              } else {
+	                  currRow[j] = 1 + Math.min(prevRow[j - 1], Math.min(prevRow[j], currRow[j - 1]));
+	              }
+	              max = Math.max(max, currRow[j]);
+	          }
 
-	public static int largestSquareOfOnes0(int[][] input) {
-		if (input == null) {
-			return 0;
-		}
+	          if (i > 0) {
+	              prevRow = Arrays.copyOf(currRow, n);
+	          }
+	      }
+	      return max;
+	  }
 
-		int n =  input.length;
-		if (n == 0) {
-			return 0;
-		}
-
-		int max = 0;
-		int[][] result = new int[n][n];
-
-		// m[i][j]: largest square of 1s with i, j as the right bottom position
-		for (int i = 0; i < n; i++) {
-			if (input[i][0] == 0) {
-				result[i][0] = 0;
-			} else {
-				result[i][0] = 1;
-				max = 1;
-			}  
-		}
-
-		for (int j = 0; j < n; j++) {
-			if (input[0][j] == 0) {
-				result[0][j] = 0;
-			} else {
-				result[0][j] = 1;
-				max = 1;
-			}
-		}
-
-		for (int i = 1; i < n; i++) {
-			for (int j = 1; j < n; j++) {
-				if (input[i][j] == 0) {
-					result[i][j] = 0;
-				} else { // input[i][j] == 1
-					int min = Math.min(result[i - 1][j - 1], result[i][j - 1]);
-					min = Math.min(min, result[i - 1][j]);
-					result[i][j] = 1 + min;
-					if (result[i][j] > max) {
-						max = result[i][j];
-					}
-				}
-			}
-		}
-
-		return max;
-	}
 
 	public static void main(String[] args) {
 		int[][] input = {{1,1,1,1},{1,1,1,1},{0,1,1,1},{1,1,1,1}};
 		System.out.println(largestSquareOfOnes(input));
 		System.out.println(largestSquareOfOnes(new int[][]{{1}}));
+		System.out.println(largestSquareOfOnes(new int[0][0]));
 		System.out.println(largestSquareOfOnes(new int[][]{{0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0}}));
 	}
 }

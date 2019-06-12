@@ -1,10 +1,9 @@
-package algorithms.DP;
+package DP;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class WordsInDictionary {
-
 	/**
 	 * Given a word and a dictionary, determine if it can be composed by concatenating words from the given dictionary.
 	 * Assumptions

@@ -1,4 +1,4 @@
-package algorithms.DP;
+package DP;
 
 public class JumpGame {
 
@@ -31,17 +31,10 @@ public class JumpGame {
 		m[n - 1] = true;
 
 		for (int i = n - 2; i >= 0; i--) {
-			int j = i + input[i];
-			if (j >= n) { // out of array bound
-				m[i] = true;
-			} else {
-				// if j == i, not into this for(), init to be false
-				// if any of m[i + 1]...m[i + input[i]] (all jump positions) is true 
-				for (int k = i + 1; k <= j; k++) {
-					if (m[k] == true) {
-						m[i] = true;
-						break;
-					}
+			for (int j = i + 1; j <= i + input[i]; j++) {
+				if (j >= n || m[j]) { // out of bound
+					m[i] = true;
+					break;
 				}
 			}
 		}
@@ -68,19 +61,20 @@ public class JumpGame {
 		//  m[i] = -1 if cannot jump from i to last index
 		for (int i = n - 2; i >= 0; i--) {
 			// init: -1 for unreachable
-			m[i] = -1;
-			int currMin = Integer.MAX_VALUE;
-			for (int j = i + 1; j <= i + input[i] && j < n; j++) { // index out of bound
-				if (m[j] != -1 && input[j] < currMin) {
-					currMin = input[j];
+			int currMin = -1;
+			for (int j = i + 1; j <= i + input[i]; j++) {
+				if (j >= n) { // index out of bound
+					currMin = 1;
+					break;
+				} else if (m[j] != - 1) {
+					int temp = 1 + m[j];
+					if (currMin == -1 || temp < currMin) {
+						currMin = temp;
+					}
 				}
 			}
 			// if i == i + input[i], unreachable m[i] = -1
-			if (currMin == Integer.MAX_VALUE) {
-				currMin = -1;
-			} else {
-				m[i] = currMin + 1;
-			}
+			m[i] = currMin;			
 		}
 
 		return m[0];	
