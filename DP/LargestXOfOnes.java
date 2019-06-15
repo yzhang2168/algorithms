@@ -1,4 +1,6 @@
-package algorithms.DP;
+package DP;
+
+import java.util.Arrays;
 
 public class LargestXOfOnes {
 
@@ -16,7 +18,92 @@ public class LargestXOfOnes {
   {1, 0, 1, 1} }
 the largest X of 1s has arm length 2.
 	 * */
+	public int largestXOfOnes(int[][] matrix) {
+		int n = matrix.length;
+		if (n == 0) {
+			return 0;
+		}
+		
+		int m = matrix[0].length;
+		if (m == 0) {
+			return 0;
+		}
+		
+		int[][] topLeftRight = topLeftRight(matrix, n, m);		
+		int[][] bottomLeftRight = bottomLeftRight(matrix, n, m);		
+		return merge(topLeftRight, bottomLeftRight, n, m);
+	}
 	
+	private int[][] topLeftRight(int[][] matrix, int n, int m) {
+		int[][] topLeft = new int[n][m];
+		int[][] topRight = new int[n][m];
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				if (matrix[i][j] == 1) {
+					if (i == 0) {
+						topLeft[i][j] = 1;
+						topRight[i][j] = 1;
+					} else if (j == 0) {
+						topLeft[i][j] = 1;
+						topRight[i][j] = topRight[i - 1][j + 1] + 1;
+					} else if (j == m - 1) {
+						topLeft[i][j] = topLeft[i - 1][j - 1] + 1;
+						topRight[i][j] = 1;
+					} else {
+						topLeft[i][j] = topLeft[i - 1][j - 1] + 1;
+						topRight[i][j] = topRight[i - 1][j + 1] + 1;
+					}
+					
+				}
+			}
+		}
+		merge(topLeft, topRight, n, m);
+		return topLeft;
+	}
+	
+	private int[][] bottomLeftRight(int[][] matrix, int n, int m) {
+		int[][] bottomLeft = new int[n][m];
+		int[][] bottomRight = new int[n][m];
+		
+		for (int i = n - 1; i >= 0; i--) {
+			for (int j = m - 1; j >= 0; j--) {
+				if (matrix[i][j] == 1) {
+					if (i == n - 1) {
+						bottomLeft[i][j] = 1;
+						bottomRight[i][j] = 1;
+					} else if (j == 0) {
+						bottomLeft[i][j] = 1;
+						bottomRight[i][j] = bottomRight[i + 1][j + 1] + 1;
+					} else if (j == m - 1) {
+						bottomLeft[i][j] = bottomLeft[i + 1][j - 1] + 1;
+						bottomRight[i][j] = 1;
+					} else {
+						bottomLeft[i][j] = bottomLeft[i + 1][j - 1] + 1;
+						bottomRight[i][j] = bottomRight[i + 1][j + 1] + 1;
+					}
+					
+				}
+			}
+		}
+		
+		merge(bottomLeft, bottomRight, n, m);
+		return bottomLeft;
+	}
+	
+	// merge by taking min from 1 matrices
+	// max is arm length, not entire /\ length
+	private int merge(int[][] m1, int[][] m2, int n, int m) {
+		int max = 0;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				m1[i][j] = Math.min(m1[i][j], m2[i][j]);
+				max = Math.max(max, m1[i][j]);
+			}
+		}
+		return max;
+	}
+
 	public static int LargestX(int[][] matrix) {
 		int n = matrix.length;
 		if (n == 0) {
@@ -152,25 +239,31 @@ the largest X of 1s has arm length 2.
 	
 	
 	public static void main(String[] args) {
-		int[][] input = { {0, 1, 0, 0},
-			     		  {1, 1, 1, 1},
-			     		  {0, 1, 0, 0},
+		int[][] input = { {1, 0, 1, 0},
+			     		  {0, 1, 0, 1},
+			     		  {1, 0, 1, 0},
 			     		  {0, 1, 0, 0} };
 		
-		System.out.println();
-		util.Util.printArray(toLongestConsecutiveOnesLeft(input));
+		LargestXOfOnes test = new LargestXOfOnes();
+		System.out.println(test.largestXOfOnes(input));
+		
+		System.out.println(Arrays.deepToString(toLongestConsecutiveOnesLeft(input)));
 		System.out.println();
 		
-		util.Util.printArray(toLongestConsecutiveOnesRight(input));
+		System.out.println(Arrays.deepToString(toLongestConsecutiveOnesRight(input)));
 		System.out.println();
 		
-		util.Util.printArray(toLongestConsecutiveOnesTop(input));
+		System.out.println(Arrays.deepToString(toLongestConsecutiveOnesTop(input)));
 		System.out.println();
 		
-		util.Util.printArray(toLongestConsecutiveOnesBottom(input));
+		System.out.println(Arrays.deepToString(toLongestConsecutiveOnesBottom(input)));
 		System.out.println();
 		
 		System.out.println(LargestX(input));
 		System.out.println();
+		
+		input = new int[][]{{1,1,1,1,1},{1,0,0,1,1},{1,1,1,1,1},{1,1,1,1,0},{0,0,0,1,1}};
+		System.out.println(test.largestXOfOnes(input));
+
 	}
 }

@@ -1,7 +1,8 @@
-package algorithms.DP;
+package DP;
+
+import java.util.Arrays;
 
 public class LargestSubsquare {
-
 	/**
 	 * Given a matrix that contains only 1s and 0s, 
 	 * find the largest subsquare surrounded by 1s.
@@ -49,7 +50,46 @@ public class LargestSubsquare {
 	 * 
 	 * time: O(n ^ 2) + O(n ^ 2 * n) = O(n ^ 3)
 	 * */
-	public static int LargestSquareSurroundedByOnes(int[][] matrix) {
+	public int largestSquareOfOnes(int[][] matrix) {
+		if (matrix == null) {
+			return 0;
+		}
+		
+		int n = matrix.length;
+		int m = matrix[0].length;
+		
+		if (n == 0 || m == 0) {
+			return 0;
+		}
+		
+		int max = 0;
+		// pre-process from left to right, top to bottom so that we can look up previously saved values
+		int[][] leftToRight = new int[n][m];
+		int[][] topToBottom = new int[n][m];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) { 
+			// (i, j) bottom right corner of squares
+				if (matrix[i][j] == 1) {
+					leftToRight[i][j] = j == 0 ? 1 : 1 + leftToRight[i][j - 1];
+					topToBottom[i][j] = i == 0 ? 1 : 1 + topToBottom[i - 1][j];
+					
+					int maxLength = Math.min(leftToRight[i][j], topToBottom[i][j]);
+					for (; maxLength >= 1; maxLength--) {
+						if (leftToRight[i - maxLength + 1][j] >= maxLength && topToBottom[i][j - maxLength + 1] >= maxLength) {
+							max = Math.max(max, maxLength);
+							break;
+						}
+					} 
+				}
+			}
+		}
+		
+		System.out.println(Arrays.deepToString(leftToRight));
+		System.out.println(Arrays.deepToString(topToBottom));
+		return max;
+	}
+	
+	public static int largestSquareSurroundedByOnes(int[][] matrix) {
 		if (matrix == null) {
 			return 0;
 		}
@@ -108,7 +148,6 @@ public class LargestSubsquare {
 		return result;
 	}
 
-
 	// bottom to top: bottom arm length
 	private static int[][] toLongestConsecutiveOnesBottom(int[][] matrix) {
 		if (matrix == null || matrix.length == 0) {
@@ -141,14 +180,8 @@ public class LargestSubsquare {
 						  {1, 1, 1, 1, 1},
 						  {1, 1, 1, 0, 0}  };
 		
-		util.Util.printArray(toLongestConsecutiveOnesRight(input));
-		System.out.println();
-		
-		util.Util.printArray(toLongestConsecutiveOnesBottom(input));
-		System.out.println();
-		
-		System.out.println(LargestSquareSurroundedByOnes(input));
-		System.out.println();
+		LargestSubsquare test = new LargestSubsquare();
+		System.out.println(test.largestSquareOfOnes(input));
+		System.out.println(largestSquareSurroundedByOnes(input));		
 	}
-
 }

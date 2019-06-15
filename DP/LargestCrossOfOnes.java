@@ -1,7 +1,8 @@
-package algorithms.DP;
+package DP;
 
+import java.util.Arrays;
 
-public class LargestCrossInMatrix {
+public class LargestCrossOfOnes {
 	/**
 	 * Given a matrix that contains only 1s and 0s, find the largest cross which contains only 1s, 
 	 * with the same arm lengths and the four arms joining at the central point.
@@ -29,6 +30,92 @@ public class LargestCrossInMatrix {
 	 * m[i][j] = min(leftToRight[i][j], rightToLeft[i][j], topToBottom[i][j], bottomToTop[i][j])
 	 * among all the cells, get global max
 	 * */	
+	public int largestCrossOfOnes(int[][] matrix) {
+		int n = matrix.length;
+		if (n == 0) {
+			return 0;
+		}
+		
+		// n != 0 to avoid NPE 
+		int m = matrix[0].length;
+		if (m == 0) {
+			return 0;
+		}
+		
+		// left and up arm lengths
+		int[][] leftUp = leftUp(matrix, n, m);
+		// right and bottom arm lengths
+		int[][] rightDown = rightDown(matrix, n, m);
+		return merge(leftUp, rightDown, n, m);		
+		
+	}
+	
+	private int[][] leftUp(int[][] matrix, int n, int m) {
+		int[][] left = new int[n][m];
+		int[][] up = new int[n][m];
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				if (matrix[i][j] == 1) {
+					if (i == 0 && j == 0) {
+						left[i][j] = 1;
+						up[i][j] = 1;
+					} else if (i == 0) {
+						up[i][j] = 1;
+						left[i][j] = left[i][j - 1] + 1;
+					} else if (j == 0) {
+						left[i][j] = 1;
+						up[i][j] = up[i - 1][j] + 1;
+					} else {
+						left[i][j] = left[i][j - 1] + 1;
+						up[i][j] = up[i - 1][j] + 1;
+					}
+				}
+			}
+		}
+		merge(left, up, n, m);
+		return left;
+	}
+	
+	private int[][] rightDown(int[][] matrix, int n, int m) {
+		int[][] right = new int[n][m];
+		int[][] down = new int[n][m];
+		
+		for (int i = n - 1; i >= 0; i--) {
+			for (int j = m - 1; j >= 0; j--) {
+				if (matrix[i][j] == 1) {
+					if (i == n - 1 && j == m - 1) {
+						right[i][j] = 1;
+						down[i][j] = 1;
+					} else if (i == n - 1) {
+						down[i][j] = 1;
+						right[i][j] = right[i][j + 1] + 1;
+					} else if (j == m - 1) {
+						right[i][j] = 1;
+						down[i][j] = down[i + 1][j] + 1;
+					} else {
+						right[i][j] = right[i][j + 1] + 1;
+						down[i][j] = down[i + 1][j] + 1;
+					}
+				}
+			}
+		}
+		merge(right, down, n, m);
+		return right;
+	}
+	
+	// take min for each cell and overwrite m1
+	private int merge(int[][] m1, int[][] m2, int n, int m) {
+		int max = 0;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				m1[i][j] = Math.min(m1[i][j], m2[i][j]);
+				max = Math.max(max, m1[i][j]);
+			}
+		}
+		return max;
+	}
+	
 	public static int LargestCross(int[][] matrix) {
 		int n = matrix.length;
 		if (n == 0) {
@@ -170,6 +257,66 @@ public class LargestCrossInMatrix {
 		return max;
 	}
 	
+	public int largest(int[][] matrix) {
+	      int n = matrix.length;
+	      int m = matrix[0].length;
+
+	      int[][] topLeft = topLeft(matrix, n, m);
+	      int[][] rightDown = rightDown1(matrix, n, m);
+	      return merge(topLeft, rightDown, n, m);
+	  }
+
+	  private int[][] topLeft(int[][] matrix, int n, int m) {
+	      int[][] top = new int[n][m];
+	      int[][] left = new int[n][m];
+	      for (int i = 0; i < n; i++) {
+	          for (int j = 0; j < m; j++) {
+	              if (matrix[i][j] == 1) {
+	                if (i == 0 && j == 0) {
+	                    top[i][j] = 1;
+	                    left[i][j] = 1;
+	                } else if (i == 0) {
+	                    top[i][j] = 1;
+	                    left[i][j] = 1 + left[i][j - 1];
+	                } else if (j == 0) {
+	                    top[i][j] = 1 + top[i - 1][j];
+	                    left[i][j] = 1;
+	                } else {
+	                  top[i][j] = 1 + top[i - 1][j];
+	                  left[i][j] = 1 + left[i][j - 1]; 
+	                }
+	              }
+	          }
+	      }
+	      merge(top, left, n, m);
+	      return top;
+	  }
+
+	  private int[][] rightDown1(int[][] matrix, int n, int m) {
+	      int[][] right = new int[n][m];
+	      int[][] down = new int[n][m];
+	      for (int i = n - 1; i >= 0; i--) {
+	          for (int j = m - 1; j >= 0; j--) {
+	              if (matrix[i][j] == 1) {
+	                if (i == n - 1 && j == m - 1) {
+	                    right[i][j] = 1;
+	                    down[i][j] = 1;
+	                } else if (i == n - 1) {
+	                    right[i][j] = 1 + right[i][j + 1];
+	                    down[i][j] = 1;
+	                } else if (j == m - 1) {
+	                    right[i][j] = 1;
+	                    down[i][j] = 1 + down[i + 1][j];
+	                } else {
+	                    right[i][j] = 1 + right[i][j + 1];
+	                    down[i][j] = 1 + down[i + 1][j]; 
+	                }
+	              }
+	          }
+	      }
+	      merge(right, down, n, m);
+	      return down;
+	  }
 	
 	public static void main(String[] args) {
 		int[][] input = { {0, 1, 0, 0},
@@ -177,21 +324,25 @@ public class LargestCrossInMatrix {
 			     		  {0, 1, 0, 0},
 			     		  {0, 1, 0, 0} };
 		
-		System.out.println();
-		util.Util.printArray(toLongestConsecutiveOnesLeft(input));
-		System.out.println();
-		
-		util.Util.printArray(toLongestConsecutiveOnesRight(input));
+		System.out.println(Arrays.deepToString(toLongestConsecutiveOnesLeft(input)));
 		System.out.println();
 		
-		util.Util.printArray(toLongestConsecutiveOnesTop(input));
+		System.out.println(Arrays.deepToString(toLongestConsecutiveOnesRight(input)));
 		System.out.println();
 		
-		util.Util.printArray(toLongestConsecutiveOnesBottom(input));
+		System.out.println(Arrays.deepToString(toLongestConsecutiveOnesTop(input)));
+		System.out.println();
+		
+		System.out.println(Arrays.deepToString(toLongestConsecutiveOnesBottom(input)));
 		System.out.println();
 		
 		System.out.println(LargestCross(input));
 		System.out.println();
+		
+		input = new int[][]{{1,1,1,1,1},{1,0,0,1,1},{1,1,1,1,1},{1,1,1,1,0},{0,0,0,1,1}};
+		LargestCrossOfOnes test = new LargestCrossOfOnes();
+		System.out.println(test.largestCrossOfOnes(input));
+		System.out.println(test.largest(input));
 	}
 
 }
