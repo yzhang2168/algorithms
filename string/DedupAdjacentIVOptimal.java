@@ -1,6 +1,6 @@
 package string;
 
-public class DedupAdjacentRepeatedlyOptimal {
+public class DedupAdjacentIVOptimal {
 
 	/**
 	 * "zabbbazw" -> "w"

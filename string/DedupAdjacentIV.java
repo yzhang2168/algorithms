@@ -3,7 +3,7 @@ package string;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class DedupAdjacentRepeatedly {
+public class DedupAdjacentIV {
 
 	/**
 	 * "zabbbazw" -> "w"
