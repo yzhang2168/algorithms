@@ -1,4 +1,4 @@
-package algorithms.DP;
+package DP;
 
 /**
  * Given a string, a partitioning of the string is a palindrome partitioning 
@@ -28,13 +28,13 @@ public class MinCutsForPalindromes {
 			minCuts[i] = i;
 			
 			// case 1: [0...i] is palindrome
-			if (isPalindrome(input.substring(0, i + 1))) {
+			if (isPalindrome(input, 0, i + 1)) {
 				minCuts[i] = 0;
 			
 			// case 2: check all possible splits [0...j] || [j + 1...i], find min of all possible splits
 			} else {
 				for (int j = 0; j < i; j++) {
-					if (isPalindrome(input.substring(j + 1, i + 1))) {
+					if (isPalindrome(input, j + 1, i)) {
 						minCuts[i] = Math.min(minCuts[i], minCuts[j] + 1);
 					}
 				}
@@ -45,19 +45,17 @@ public class MinCutsForPalindromes {
 	}
 	
 	
-	public static boolean isPalindrome(String input) {
+	public static boolean isPalindrome(String input, int start, int end) {
 		if (input == null || input.length() <= 1) {
 			return true;
 		}
 		
-		int left = 0;
-		int right = input.length() - 1;
-		while (left < right) {
-			if (input.charAt(left) != input.charAt(right)) {
+		while (start < end) {
+			if (input.charAt(start) != input.charAt(end)) {
 				return false;
 			} else {
-				left++;
-				right--;
+				start++;
+				end--;
 			}
 		}
 		return true;
@@ -65,13 +63,6 @@ public class MinCutsForPalindromes {
 
 	
 	public static void main(String[] args) {
-		System.out.println(isPalindrome("a"));
-		System.out.println(isPalindrome("babbab"));
-		System.out.println(isPalindrome("babbbab"));
-		System.out.println(isPalindrome("ababbbabbababa"));
-		System.out.println(isPalindrome("aaaaaabbabb"));
-		System.out.println();
-		
 		System.out.println(MinCutsPalindromes("a"));
 		System.out.println(MinCutsPalindromes("babbab"));
 		System.out.println(MinCutsPalindromes("babbbab"));

@@ -11,13 +11,9 @@ import tree.TreeNode;
  * Examples
 
         5
-
       /   \
-
      9     12
-
    /  \      \
-
   2    3      14
 
 The lowest common ancestor of 2 and 14 is 5

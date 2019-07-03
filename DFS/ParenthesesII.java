@@ -1,4 +1,4 @@
-package algorithms.DFS;
+package DFS;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

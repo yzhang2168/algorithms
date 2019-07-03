@@ -1,9 +1,9 @@
-package algorithms.recursion.returnvaluebottomup;
+package recursion.returnvaluebottomup;
 
 import java.util.HashSet;
 import java.util.List;
 
-import data_structures.TreeNode;
+import recursion.TreeNode;
 
 public class LCAOfKNodes {
 	/**

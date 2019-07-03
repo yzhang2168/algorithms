@@ -1,6 +1,6 @@
-package algorithms.recursion.returnvaluebottomup;
+package recursion.returnvaluebottomup;
 
-import data_structures.TreeNode;
+import tree.TreeNode;
 
 public class IsBalanced {
 

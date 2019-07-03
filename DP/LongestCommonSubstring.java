@@ -1,4 +1,4 @@
-package algorithms.DP;
+package DP;
 
 import java.util.Arrays;
 
@@ -20,7 +20,6 @@ public class LongestCommonSubstring {
 		for (int i = 0; i <= n; i++) {
 			common[0][i] = i;
 		}
-		System.out.println(Arrays.deepToString(common));
 		return "result";
 	}
 	

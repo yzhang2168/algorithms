@@ -22,8 +22,8 @@ public class MaxSumLeafToLeafII {
 			return Integer.MIN_VALUE;
 		}
 
-		int[] maxSum = new int[]{Integer.MIN_VALUE};
-		maxSumLeafToLeafWrong(root, maxSum);
+		int[] maxSum = {Integer.MIN_VALUE};
+		maxSumLeafToLeaf(root, maxSum);
 		return maxSum[0];
 	}
 
@@ -32,6 +32,12 @@ public class MaxSumLeafToLeafII {
 		if (root == null) {
 			return 0;
 		}
+		
+		/*
+		if (root.left == null && root.right == null) {
+			return root.value;
+		}
+		*/
 
 		// step 1: want from left and right subtrees
 		// max single path sum - straight path / and \
@@ -54,36 +60,7 @@ public class MaxSumLeafToLeafII {
 	}
 
 
-	private static int maxSumLeafToLeafWrong(TreeNode root, int[] maxSum) {
-		// base
-		if (root == null) {
-			return 0;
-		}
-		if (root.left == null && root.right == null) {
-			return root.value;
-		} 
 
-		// step 1: want from left and right subtrees
-		// max single path sum - straight path / and \
-		int leftSum = maxSumLeafToLeaf(root.left, maxSum);
-		int rightSum = maxSumLeafToLeaf(root.right, maxSum);
-
-		// step 2: logic at curr level
-		// calculate max sum with curr node at the top /\
-		// need to include both left / and right \ such that the path is from leaf to leaf
-		if (root.left != null && root.right != null) {
-			int currSum = root.value + leftSum + rightSum;
-			maxSum[0] = Math.max(maxSum[0], currSum);
-
-			// step 3: what to return to parent call
-			// the larger sum [leaf...curr node]
-			return Math.max(leftSum, rightSum) + root.value;
-		} else if (root.left == null) {
-			return root.value + maxSumLeafToLeaf(root.right, maxSum);
-		} else {//if (root.right == null) {
-			return root.value + maxSumLeafToLeaf(root.left, maxSum);
-		}
-	}
 
 
 	public static void main(String[] args) {
@@ -150,6 +127,5 @@ public class MaxSumLeafToLeafII {
 		System.out.println(maxSumLeafToLeaf(n1));
 		System.out.println(maxSumLeafToLeaf(n11));
 		System.out.println(maxSumLeafToLeaf(n21));
-
 	}
 }

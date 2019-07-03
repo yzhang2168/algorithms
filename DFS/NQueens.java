@@ -1,4 +1,4 @@
-package algorithms.DFS;
+package DFS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,52 +37,16 @@ public class NQueens {
 	 * 3 stands for 2nd queen in (2, 3)
 	 * 
 	 * with obstacles: one row is broken into 2 rows
-	 * */
-	
-	// place 8 queens, each queen at (i, result[i])
-	public static void eightQueensI() {
-		int[] result = new int[8];
-		eightQueensI(result, 0);
-	}
-	
-	public static void eightQueensI(int[] result, int currRow) {
-		if (currRow == 8) {
-			util.Util.printArray(result);
-			return;
-		}
-		
-		// try all n cols to place a new queen in the curr row		
-		for (int col = 0; col < 8; col++) {
-			// check if the position is valid considering result[0...currRow - 1]
-			if (validPosition(result, currRow, col)) {
-				result[currRow] = col; 
-				eightQueensI(result, currRow + 1);
-			}
-			// result[currRow] will be reset by next
-		}
-	}
-	
-	private static boolean validPosition(int[] result, int row, int col) {
-		// check all previous rows' col numbers and diagonal lines
-		for (int i = 0; i < row; i++) {
-			// result[i]: ith row's col number
-			if (result[i] == col || Math.abs(result[i] - col) == row - i) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	
+	 * */	
 	// place 8 queens, each queen at (i, list.get(i))
-	public static List<List<Integer>> eightQueensII() {
+	public static List<List<Integer>> eightQueens() {
 		List<List<Integer>> result = new ArrayList<List<Integer>>(); 
 		List<Integer> curr = new ArrayList<Integer>();		
-		eightQueensII(result, curr);
+		eightQueens(result, curr);
 		return result;
 	}
 	
-	private static void eightQueensII(List<List<Integer>> result, List<Integer> curr) {
+	private static void eightQueens(List<List<Integer>> result, List<Integer> curr) {
 		if (curr.size() == 8) {
 			result.add(new ArrayList<Integer>(curr));
 			return;
@@ -95,7 +59,7 @@ public class NQueens {
 				// col: i
 				// row: curr.size() 
 				curr.add(col);
-				eightQueensII(result, curr);
+				eightQueens(result, curr);
 				curr.remove(curr.size() - 1);
 			}
 		}
@@ -154,11 +118,7 @@ public class NQueens {
 	
 	
 	public static void main(String[] args) {
-		int[] result = new int[8];
-		eightQueensI(result, 0);
-		System.out.println();
-
-		System.out.println(eightQueensII());
+		System.out.println(eightQueens());
 		System.out.println();
 		
 		System.out.println(nQueens(8));
