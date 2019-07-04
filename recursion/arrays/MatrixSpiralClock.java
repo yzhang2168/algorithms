@@ -1,4 +1,4 @@
-package recursion;
+package recursion.arrays;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +13,7 @@ import java.util.List;
  * 13 12 11 10 9
  * O(n)
  * */
-public class MatrixSpiralTraversal {
+public class MatrixSpiralClock {
 
 	public static void spiralRecursion(int[][] input) {
 		if (input == null || input.length == 0 || input.length != input[0].length) {
@@ -37,9 +37,11 @@ public class MatrixSpiralTraversal {
 
 		// top
 		// each round, print size - 1 elements: 5 x 5 matrix, outer loop prints 4 elements 1 2 3 4 | 5
+		// need to finish top row before doing right col, so 4 for loops
 		for (int i = 0; i < size - 1; i++) {
 			input[0 + offset][i + offset] = counter++;
 		}
+		
 		// right
 		for (int i = 0; i < size - 1; i++) {
 			input[i + offset][offset + size - 1] = counter++;

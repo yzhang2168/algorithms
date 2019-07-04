@@ -1,4 +1,4 @@
-package recursion;
+package recursion.arrays;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,13 +84,13 @@ public class RectangleSpiralTraversal {
 	}
 
 	private void spiralRecursive(int[][] input, List<Integer> result, int top, int right, int bottom, int left) {
-		if (left > right || top > bottom) {
-			return;
-		}
 		// case 1: nothing left, do nothing
 		// 1.1: wide rectangle: even number of rows, top > bottom
 		// 1.2: tall rectangle: even number of cols, left > right
-
+		if (left > right || top > bottom) {
+			return;
+		}
+		
 		// case 2: row left
 		// wide rectangle: odd number of rows, top == bottom
 		if (top == bottom) {

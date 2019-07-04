@@ -1,10 +1,14 @@
-package recursion;
+package recursion.arrays;
 
 import java.util.Arrays;
 
 /**
- * given a 2d array n x n, in place rotate 90 degree 1 2 3 4 5 16 17 18 19 6 15
- * 24 25 20 7 14 23 22 21 8 13 12 11 10 9
+ * given a 2d array n x n, in place rotate 90 degree 
+ *  1  2  3  4 5 
+ * 16 17 18 19 6 
+ * 15 24 25 20 7 
+ * 14 23 22 21 8 
+ * 13 12 11 10 9
  * 
  * [0][0] -> [0][n-1] -> [n-1][n-1] -> [n-1][0] [0][1] -> [1][n-1] -> [n-1][n-2]
  * each time: one circle
@@ -17,11 +21,13 @@ public class MatrixRotate90Degree {
 		}
 
 		int n = input.length;
-		int offset = 0;
-		while (offset < n / 2) {
+		for (int offset = 0; offset < n / 2; offset++) {
 			for (int i = offset; i < n - 1 - offset; i++) {
 				// [offset][i] > [i][n - 1 - offset] > [n - 1 - offset][n - 1 - i] > [n - 1 - i][offset] > [offset][i]
-				// save top row
+				// col index -> row index
+				// row index -> col index (n - 1 - row)
+				
+				// since this is swap, we do not need to finish top row first, so just use 1 for loop, instead of 4 for loops for spiral print
 				int tmp = input[offset][i];
 
 				// top row <- left col
@@ -36,28 +42,6 @@ public class MatrixRotate90Degree {
 				// right col <- top row
 				input[i][n - 1 - offset] = tmp;
 			}
-			offset++;
-		}
-	}
-
-	
-	public void rotate(int[][] input) {
-		if (input == null || input.length == 0 || input.length != input[0].length) {
-			return;
-		}
-
-		int start = 0;
-		int end = input.length - 1;
-		while (start < end) {
-			for (int i = start; i < end; i++) {
-				int temp = input[start][start + i];
-				input[start][start + i] = input[end - i][start];
-				input[end - i][start] = input[end][end - i];
-				input[end][end - i] = input[start + i][end];
-				input[start + i][end] = temp;
-			}
-			start++;
-			end--;
 		}
 	}
 	
@@ -78,7 +62,6 @@ public class MatrixRotate90Degree {
 		}
 	}
 	
-
 
 	public static void main(String[] args) {
 		MatrixRotate90Degree test = new MatrixRotate90Degree();
@@ -110,11 +93,6 @@ public class MatrixRotate90Degree {
 		 * 9 8 7 6 5
 		 */
 
-		int[][] test6 = new int[][] { { 1, 2, 3, 4, 5 }, { 16, 17, 18, 19, 6 }, { 15, 24, 25, 20, 7 },
-				{ 14, 23, 22, 21, 8 }, { 13, 12, 11, 10, 9 } };
-		test.rotate(test6);
-		System.out.println(Arrays.deepToString(test6));
-
 		int[][] test7 = new int[][] { { 1, 2, 3, 4, 5 }, { 16, 17, 18, 19, 6 }, { 15, 24, 25, 20, 7 },
 				{ 14, 23, 22, 21, 8 }, { 13, 12, 11, 10, 9 } };
 		test.rotate90Clockwise(test7);
@@ -125,5 +103,4 @@ public class MatrixRotate90Degree {
 		test.rotate90CounterClock(test8);
 		System.out.println(Arrays.deepToString(test8));
 	}
-
 }

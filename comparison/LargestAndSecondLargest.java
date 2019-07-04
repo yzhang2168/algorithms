@@ -49,6 +49,8 @@ public class LargestAndSecondLargest {
 		
 		while (largerLength > 1) {
 			compareAndSwap(helper, largerLength);
+			
+			// + 1 to include mid element for odd number of elements 
 			largerLength = (largerLength + 1) / 2;
 		}
 		
@@ -64,6 +66,7 @@ public class LargestAndSecondLargest {
 	}
 	
 	private void compareAndSwap(Element[] helper, int largerLength) {
+		// odd number: mid element is not compared
 		for (int i = 0; i < largerLength / 2; i++) {
 			if (helper[i].value < helper[largerLength - 1 - i].value) {
 				swap(helper, i, largerLength - 1 - i);

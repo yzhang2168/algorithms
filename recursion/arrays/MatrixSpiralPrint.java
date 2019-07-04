@@ -1,4 +1,4 @@
-package recursion;
+package recursion.arrays;
 
 import java.util.Arrays;
 

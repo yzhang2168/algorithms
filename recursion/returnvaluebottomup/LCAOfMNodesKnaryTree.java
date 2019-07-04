@@ -1,4 +1,4 @@
-package algorithms.recursion.returnvaluebottomup;
+package recursion.returnvaluebottomup;
 
 import java.util.List;
 import java.util.Set;

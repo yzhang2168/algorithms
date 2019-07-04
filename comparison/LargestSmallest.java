@@ -62,6 +62,25 @@ public class LargestSmallest {
 	 *     j
 	 * 
 	 * */
+	public int[] largestAndSmallestI(int[] array) {
+		int n = array.length;
+		int i = 0;
+		int j = n - 1;
+		
+		// if odd number, mid element is not compared
+		while (i < j) {
+			if (array[i] < array[j]) {
+				swap(array, i, j);
+			}
+			i++;
+			j--;
+		}
+		
+	    int max = getMax(array, 0, (n - 1) / 2);
+	    int min = getMin(array, n / 2, n - 1);
+		return new int[] {max, min};
+	}
+	
 	public int[] largestAndSmallestII(int[] array) {
 		int i = 0;
 		int j = array.length - 1;
@@ -76,7 +95,7 @@ public class LargestSmallest {
 		// winners: [0,i-1]
 		// losers: [j+1,n-1]
 		int max = getMax(array, 0, i - 1);
-		int min = getMin(array, j + 1, array.length - 1);
+		int min = getMin(array, j + 1, array.length - 1);		
 		return new int[] {max, min};
 	}
 	
@@ -112,14 +131,14 @@ public class LargestSmallest {
 		}
 
 		int max = getMax(array, 0, (n - 1) / 2); // this works for both even and odd numbers
-		int min = getMax(array, n / 2, n - 1);
+		int min = getMin(array, n / 2, n - 1);
 		return new int[] {max, min};
 	}
 
 	public static void main(String[] args) {
 		LargestSmallest test = new LargestSmallest();
 		int[] input = new int[]{1,2,3,3,3};
-		int[] output = test.largestAndSmallestII(input);
+		int[] output = test.largestAndSmallestI(input);
 		System.out.println(Arrays.toString(output));
 	}
 }
